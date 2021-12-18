@@ -2,8 +2,8 @@ import { CategoriesRepository } from "../repostiories/CategoriesRepository";
 import { ICategoriesRepository } from "../repostiories/ICategoriesRepository";
 
 interface IRequest{
-    name: string,
-    description: string
+    name: string;
+    description: string;
 };
 
 class CreateCategoryService{
