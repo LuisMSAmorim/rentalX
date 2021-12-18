@@ -2,8 +2,8 @@ import { v4 as uuid } from "uuid";
 
 class Category{
     private id?: string;
-    private name: string;
-    private description: string;
+    public name: string;
+    public description: string;
     private createdAt: Date;
 
     constructor(){
