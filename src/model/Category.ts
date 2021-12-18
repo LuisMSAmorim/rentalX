@@ -1,11 +1,10 @@
 import { v4 as uuid } from "uuid";
 
 class Category{
-
-    id?: string;
-    name: string;
-    description: string;
-    createdAt: Date;
+    private id?: string;
+    private name: string;
+    private description: string;
+    private createdAt: Date;
 
     constructor(){
         if(!this.id){
@@ -14,4 +13,4 @@ class Category{
     };
 };
 
-export { Category }
+export { Category };
