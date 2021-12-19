@@ -1,7 +1,4 @@
 import express, { Router } from 'express';
-import { categoriesRoutes } from './routes/categories.routes';
-import { SpecificationsRoutes } from './routes/specifications.routes';
-import { router } from "./routes/index.routes";
 
 const app = express();
 
