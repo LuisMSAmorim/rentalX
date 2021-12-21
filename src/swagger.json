@@ -5,5 +5,41 @@
         "description": "This is an rent API",
         "version": "1.0.0",
         "contact": "luismiguel_silvaamorim@hotmail.com"
+    },
+    "paths": {
+        "/categories": {
+            "post": {
+                "tags": ["Category"],
+                "summary": "Create Category",
+                "description": "Create a new category",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": "string"
+                                },
+                                "example": {
+                                    "name": "Category Test",
+                                    "description": "This is a category"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "500": {
+                        "description": "Category already exists"
+                    }
+                }
+            }
+        }
     }
 }
