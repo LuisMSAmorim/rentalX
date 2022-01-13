@@ -6,7 +6,7 @@ class CategoriesRepository implements ICategoriesRepository{
 
     private repository: Repository<Category>;
  
-    private constructor(){
+    constructor(){
         this.repository = getRepository(Category);
     };
 

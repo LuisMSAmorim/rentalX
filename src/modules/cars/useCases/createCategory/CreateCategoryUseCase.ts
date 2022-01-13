@@ -13,14 +13,14 @@ class CreateCategoryUseCase{
         this.categoriesRepository = categoriesRepository;
     };
 
-    public execute({ name, description }: IRequest): void{
-        const findCategory = this.categoriesRepository.findByName(name);
+    public async execute({ name, description }: IRequest): Promise<void> {
+        const findCategory = await this.categoriesRepository.findByName(name);
 
         if(findCategory){
             throw new Error("Name already in use");
         };
     
-        this.categoriesRepository.create({name, description});
+        await this.categoriesRepository.create({name, description});
     };
 };
 

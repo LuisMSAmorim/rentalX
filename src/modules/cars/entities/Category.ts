@@ -14,11 +14,11 @@ class Category{
     public description: string;
 
     @CreateDateColumn()
-    private createdAt: Date;
+    private created_at: Date;
 
     constructor(){
         this.id = uuid();
-        this.createdAt = new Date();
+        // this.createdAt = new Date();
     };
 };
 
