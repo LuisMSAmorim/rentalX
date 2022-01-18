@@ -6,12 +6,12 @@ import { container } from "tsyringe";
 
 class CreateSpecificationController{
     
-    public handle(request: Request, response: Response): Response{
+    public async handle(request: Request, response: Response): Promise<Response> {
         const { name, description } = request.body;
 
         const createSpecificationUseCase = container.resolve(CreateSpecificationUseCase);
 
-        createSpecificationUseCase.execute({name, description});
+        await createSpecificationUseCase.execute({name, description});
 
         return response.status(201).send();
     };

@@ -19,14 +19,14 @@ class CreateSpecificationUseCase{
         this.specificationsRepository = createSpecifictionsRepository;
     };
 
-    public execute({name, description}: IRequest): void{
-        const findSpecification = this.specificationsRepository.findByName(name);
+    public async execute({ name, description }: IRequest): Promise<void> {
+        const findSpecification = await this.specificationsRepository.findByName(name);
 
         if(findSpecification){
             throw new Error("Name already in use");
         };
     
-        this.specificationsRepository.create({name, description});
+        await this.specificationsRepository.create({name, description});
     };
 };
 
