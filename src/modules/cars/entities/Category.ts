@@ -18,7 +18,6 @@ class Category{
 
     constructor(){
         this.id = uuid();
-        // this.createdAt = new Date();
     };
 };
 
