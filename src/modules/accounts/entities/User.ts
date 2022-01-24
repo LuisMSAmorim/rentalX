@@ -11,9 +11,6 @@ class User {
     private name: string;
 
     @Column()
-    private username: string;
-
-    @Column()
     private password: string;
 
     @Column()
