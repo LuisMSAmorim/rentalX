@@ -1,7 +1,7 @@
 import { inject } from "tsyringe";
 import { ICreateUserDTO } from "../../../DTOs/ICreateUserDTO";
 
-import { IUsersRepository } from "../../repositories/implementations/IUsersRepository";
+import { IUsersRepository } from "../../repositories/IUsersRepository";
 
 
 class CreateUserUseCase {

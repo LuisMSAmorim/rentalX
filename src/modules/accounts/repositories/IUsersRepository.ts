@@ -1,4 +1,4 @@
-import { ICreateUserDTO } from "../../../DTOs/ICreateUserDTO";
+import { ICreateUserDTO } from "../../DTOs/ICreateUserDTO";
 
 interface IUsersRepository {
     create(data: ICreateUserDTO): Promise<void>;
