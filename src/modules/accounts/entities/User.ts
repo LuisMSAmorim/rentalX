@@ -5,25 +5,25 @@ import { v4 as uuid } from "uuid";
 class User {
 
     @PrimaryColumn()
-    private id: string;
+    id: string;
 
     @Column()
-    private name: string;
+    name: string;
 
     @Column()
-    private password: string;
+    password: string;
 
     @Column()
-    private email: string;
+    email: string;
 
     @Column()
-    private driver_license: string;
+    driver_license: string;
 
     @Column()
-    private isAdmin: boolean;
+    isAdmin: boolean;
 
     @CreateDateColumn()
-    private created_at: Date;
+    created_at: Date;
 
     constructor(){
         this.id = uuid();

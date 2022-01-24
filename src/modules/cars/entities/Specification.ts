@@ -5,16 +5,16 @@ import { v4 as uuid } from "uuid";
 class Specification{
     
     @PrimaryColumn()
-    private id: string;
+    id: string;
 
     @Column()
-    public name: string;
+    name: string;
 
     @Column()
-    public description: string;
+    description: string;
 
     @CreateDateColumn()
-    private created_at: Date;
+    created_at: Date;
 
     constructor(){
         this.id = uuid();
