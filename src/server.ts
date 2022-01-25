@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import swaggerUi from "swagger-ui-express";
+import "express-async-errors";
 
 import "./database";
 
@@ -25,7 +26,7 @@ app.use((err: Error, request: Request, response: Response, next: NextFunction) =
             message: err.message
         });
     };
-    
+
     return response.status(500).json({status: "error", message: `Internal server error - ${err.message}`});
 });
 
