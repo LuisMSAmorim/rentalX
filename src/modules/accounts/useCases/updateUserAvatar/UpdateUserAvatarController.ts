@@ -5,9 +5,9 @@ import { UpdateUserAvatarUseCase } from "./UpdateUserAvatarUseCase";
 
 class UpdateUserAvatarController {
 
-    public async handle(request: Request, response: Response){
+    public async handle(request: Request, response: Response): Promise<Response> {
         const { id } = request.user;
-        const { avatar_file } = request.body;
+        const avatar_file = request.file.filename;
 
         const updateUserAvatarUseCase = container.resolve(UpdateUserAvatarUseCase);
 
