@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
+import { AppError } from "../../../../errors/AppError";
 import { ICategoriesRepository } from "../../repositories/ICategoriesRepository";
 
 interface IRequest{
@@ -23,7 +24,7 @@ class CreateCategoryUseCase{
         const findCategory = await this.categoriesRepository.findByName(name);
 
         if(findCategory){
-            throw new Error("Name already in use");
+            throw new AppError("Name already in use");
         };
     
         await this.categoriesRepository.create({name, description});
