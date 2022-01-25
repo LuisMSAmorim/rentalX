@@ -47,7 +47,13 @@ class AuthenticateUserUseCase {
             expiresIn: "1d"
         });
 
-        return { user, token };
+        return {
+            user: {
+                email: user.email,
+                name: user.name
+            },
+            token
+        };
     };
 };
 
