@@ -6,7 +6,7 @@ import "./database";
 
 import "./shared/container";
 
-import { router } from './routes/index.routes';
+import { router } from './shared/infra/http/routes/index.routes';
 
 import swaggerFile from "./swagger.json";
 import { AppError } from '@errors/AppError';
