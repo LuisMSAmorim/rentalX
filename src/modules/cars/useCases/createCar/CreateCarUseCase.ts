@@ -15,13 +15,13 @@ interface IRequest {
     category_id: string;
 };
 
-// @injectable()
+@injectable()
 class CreateCarUseCase {
 
     private carsRepository: ICarsRepository;
 
     constructor(
-        // @inject("CarsRepository")
+        @inject("CarsRepository")
         carsRepository: ICarsRepository
         ){
         this.carsRepository = carsRepository;

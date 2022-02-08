@@ -12,7 +12,7 @@
 **BR**
 - Should not be able to register a car with a license plate already registered;
 - The car must be available for default;
-- The car must be registered by an admin;
+- * The car must be registered by an admin;
 
 ## Cars listing
 
