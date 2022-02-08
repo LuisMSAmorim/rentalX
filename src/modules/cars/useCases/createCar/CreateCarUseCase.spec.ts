@@ -37,7 +37,7 @@ describe("Create Car", () => {
                 category_id: "testing"
             });
     
-            const teste = await createCarUseCase.execute({
+            await createCarUseCase.execute({
                 name: "Car2",
                 description: "A description",
                 daily_rate: 100,
@@ -47,7 +47,20 @@ describe("Create Car", () => {
                 category_id: "testing"
             });
 
-            console.log(teste);
         }).rejects.toBeInstanceOf(AppError);
+    });
+
+    it("Should be able to create an available car by default", async () => {
+        const car = await createCarUseCase.execute({
+            name: "Car2",
+            description: "A description",
+            daily_rate: 100,
+            license_plate: "WSL-1234",
+            fine_amount: 60,
+            brand: "Test",
+            category_id: "testing"
+        });
+
+        expect(car.available).toBe(true);
     });
 });

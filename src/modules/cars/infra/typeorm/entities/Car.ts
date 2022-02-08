@@ -1,3 +1,5 @@
+import { v4 as uuid } from "uuid";
+
 
 class Car {
 
@@ -22,7 +24,9 @@ class Car {
     created_at: Date;
 
     constructor(){
-
+        this.id = uuid();
+        this.available = true;
+        this.created_at = new Date();
     };
 
 };

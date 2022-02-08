@@ -11,7 +11,6 @@
 
 **BR**
 - Should not be able to register a car with a license plate already registered;
-- Should not be able to change a car license plate;
 - The car must be available for default;
 - The car must be registered by an admin;
 
