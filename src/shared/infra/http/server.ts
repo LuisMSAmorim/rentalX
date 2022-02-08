@@ -11,7 +11,7 @@ import { router } from '../../../shared/infra/http/routes/index.routes';
 
 import { AppError } from '@shared/errors/AppError';
 
-createConnection();
+createConnection('database_ignite');
 const app = express();
 
 app.use(express.urlencoded({ extended: false }));

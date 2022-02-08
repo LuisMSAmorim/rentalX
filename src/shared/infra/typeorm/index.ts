@@ -4,10 +4,10 @@ interface IOptions {
   host: string;
 }
 
-export default async (host = "database"): Promise<Connection> => {
+export default async (host: string = "database"): Promise<Connection> => {
   const defaultOptions = await getConnectionOptions();
 
-  return createConnection(
+  return await createConnection(
     Object.assign(defaultOptions, {
       host
     })
