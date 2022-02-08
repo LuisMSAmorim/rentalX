@@ -8,7 +8,6 @@
 
 **FR**
 - Should be able to register a new car;
-- Should be able to list all categories;
 
 **BR**
 - Should not be able to register a car with a license plate already registered;
