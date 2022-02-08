@@ -28,7 +28,7 @@ describe("Create Category", () => {
 
     it("Should not be able to create a new category with existent name", async () => {
         
-        expect(async () => {    
+        await expect(async () => {    
             const category = {
                 name: "Category Test",
                 description: "Description Test"
