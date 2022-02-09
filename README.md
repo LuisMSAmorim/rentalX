@@ -29,13 +29,11 @@
 
 **FR**
 - Should be able to register a specification to a car;
-- Should be able to list all specifications;
-- Should be able to list all cars;
 - The specification must be registered by an admin;
 
 **BR**
 - The cars must be registered;
-- Should not be able to register an existing specification to a car;
+- Should not be able to register a non-existent specification to a car;
 
 ## Cars image registration
 
