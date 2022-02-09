@@ -10,7 +10,7 @@ interface IRequest {
 };
 
 @injectable()
-class ListCarsUseCase {
+class ListAvailableCarsUseCase {
 
     private carsRepository: ICarsRepository;
 
@@ -29,4 +29,4 @@ class ListCarsUseCase {
     };
 };
 
-export { ListCarsUseCase };
+export { ListAvailableCarsUseCase };
