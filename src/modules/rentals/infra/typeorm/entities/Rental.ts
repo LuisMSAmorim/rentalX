@@ -19,6 +19,10 @@ class Rental {
     created_at: Date;
 
     updated_at: Date;
+
+    constructor(){
+        this.id = uuid();  
+    };
 };
 
 export { Rental };
