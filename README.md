@@ -39,7 +39,6 @@
 
 **FR**
 - Should be able to register a new car image;
-- Should be able to list all cars;
 
 **NFR**
 - Use Multer to uploads;
