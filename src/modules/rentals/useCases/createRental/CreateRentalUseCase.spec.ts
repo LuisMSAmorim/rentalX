@@ -60,4 +60,14 @@ describe("Create Rental", () => {
 
         }).rejects.toBeInstanceOf(AppError);
     });
+
+    it("Should not able to create a rental with a invalid return time (less then 24 hours)", async () => {
+        await expect(async () => {
+                await createRentalUseCase.execute({
+                    user_id: "879856",
+                    car_id: "1212123",
+                    expected_return_date: dayjs().add(23, "hours").toDate()
+                });
+        }).rejects.toBeInstanceOf(AppError);
+    });
 });
