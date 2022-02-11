@@ -2,6 +2,9 @@ import { inject, injectable } from "tsyringe";
 
 import { IRentalsRepository } from "@modules/rentals/repositories/IRentalsRepository";
 
+import { RentalsRepository } from "@modules/rentals/infra/typeorm/repositories/RentalsRepository";
+import { Rental } from "@modules/rentals/infra/typeorm/entities/Rental";
+
 import { AppError } from "@shared/errors/AppError";
 
 interface IRequest {
@@ -23,7 +26,7 @@ class CreateRentalUseCase {
         this.rentalsRepository = rentalsRepository;
     };
 
-    public async execute({ car_id, expected_return_date, user_id }: IRequest): Promise<void> {
+    public async execute({ car_id, expected_return_date, user_id }: IRequest): Promise<Rental> {
         const carUnavailable = await this.rentalsRepository.findOpenRentalByCar(car_id);
 
         if(carUnavailable){
@@ -35,6 +38,14 @@ class CreateRentalUseCase {
         if(rentalOpenToUser){
             throw new AppError("User already have an open rental");
         };
+
+        const rental = await this.rentalsRepository.create({
+            user_id,
+            car_id,
+            expected_return_date
+        });
+
+        return rental;
     };
 };
 
