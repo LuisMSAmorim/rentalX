@@ -34,6 +34,23 @@ describe("Create Rental", () => {
             
             await createRentalUseCase.execute({
                 user_id: "12345",
+                car_id: "468163",
+                expected_return_date: new Date()
+            });
+
+        }).rejects.toBeInstanceOf(AppError);
+    });
+
+    it("Should not be able to create a new rental if car is currently rented", async () => {
+        await expect(async () => {
+            await createRentalUseCase.execute({
+                user_id: "879856",
+                car_id: "1212123",
+                expected_return_date: new Date()
+            });
+            
+            await createRentalUseCase.execute({
+                user_id: "12345",
                 car_id: "1212123",
                 expected_return_date: new Date()
             });
