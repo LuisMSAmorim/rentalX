@@ -56,3 +56,4 @@
 - The rental must have minimum duration of 24 hours;
 - Should not be able to register a new rental if user already have a current one;
 - Should not be able to register a new rental if car are already rented;
+- User must be logged to create a rental;

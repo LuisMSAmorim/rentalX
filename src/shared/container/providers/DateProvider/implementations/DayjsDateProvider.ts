@@ -9,10 +9,10 @@ class DayjsDateProvider implements IDateProvider{
 
     public compareInHours(start_date: Date | "now", end_date: Date | "now"): number {
         if(start_date === "now"){
-            start_date = dayjs().toDate()
+            start_date = this.dateNow();
         };
         if(end_date === "now"){
-            end_date = dayjs().toDate()
+            end_date = this.dateNow();
         };
 
         const start_date_utc = this.convertToUTC(start_date);
@@ -23,6 +23,10 @@ class DayjsDateProvider implements IDateProvider{
 
     public convertToUTC(date: Date): string {
         return dayjs(date).utc().local().format();
+    };
+
+    public dateNow(): Date {
+        return dayjs().toDate();
     };
 
 };

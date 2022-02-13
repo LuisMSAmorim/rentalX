@@ -24,7 +24,7 @@ class CreateRentalUseCase {
         @inject("RentalsRepository")
         rentalsRepository:
         RentalsRepository,
-        dateProvider: IDateProvider;
+        dateProvider: IDateProvider
     ){
         this.rentalsRepository = rentalsRepository;
         this.dateProvider = dateProvider;
@@ -45,7 +45,7 @@ class CreateRentalUseCase {
             throw new AppError("User already have an open rental");
         };
 
-        const compare = this.dateProvider.compareInHours(expected_return_date, "now");
+        const compare = this.dateProvider.compareInHours("now", expected_return_date, );
 
         if(compare < minHours){
             throw new AppError("Invalid return time (min. 24 hours)");
