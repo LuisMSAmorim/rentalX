@@ -8,8 +8,7 @@ import createConnection from "@shared/infra/typeorm";
 
 let connection: Connection;
 
-describe("Create Category Controller", () => {
-
+describe("List Categories", () => {
     const server = request(app);
 
     beforeAll(async () => {
@@ -30,7 +29,7 @@ describe("Create Category Controller", () => {
         await connection.close();
     });
 
-    it("Should be able to create a new category", async () => {
+    it("Should be able to list all categories", async () => {
         const loginData = {
             email: "admin@admin.com.br",
             password: "admin"
@@ -44,31 +43,16 @@ describe("Create Category Controller", () => {
             description: "A supertest test description"
         };
 
-        const response = await server.post('/categories').send(category).set({
+        await server.post('/categories').send(category).set({
             Authorization: `Bearer ${token}`
         });
 
-        expect(response.status).toBe(201);
-    });
-
-    it("Should not be able to create a new category with a repeated name", async () => {
-        const loginData = {
-            email: "admin@admin.com.br",
-            password: "admin"
-        };
-
-        const loginToken = await server.post('/sessions').send(loginData);
-        const { token } = loginToken.body.token;
-
-        const category = {
-            name: "CategorySuperTest",
-            description: "A supertest test description"
-        };
-
-        const response = await server.post('/categories').send(category).set({
+        const response = await server.get('/categories').set({
             Authorization: `Bearer ${token}`
         });
 
-        expect(response.status).toBe(400);
+        expect(response.status).toBe(200);
+        expect(response.body.length).toBe(1);
     });
+
 });
