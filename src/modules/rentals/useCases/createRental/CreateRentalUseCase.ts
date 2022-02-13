@@ -24,7 +24,9 @@ class CreateRentalUseCase {
         @inject("RentalsRepository")
         rentalsRepository:
         RentalsRepository,
-        dateProvider: IDateProvider
+        @inject("DayjsDateProvider")
+        dateProvider: 
+        IDateProvider
     ){
         this.rentalsRepository = rentalsRepository;
         this.dateProvider = dateProvider;
