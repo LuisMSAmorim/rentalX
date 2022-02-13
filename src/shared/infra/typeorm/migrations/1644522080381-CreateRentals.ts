@@ -30,7 +30,7 @@ export class CreateRentals1644522080381 implements MigrationInterface {
                         type: "timestamp"
                     },
                     {
-                        name: "expect_return_date",
+                        name: "expected_return_date",
                         type: "timestamp"
                     },
                     {
