@@ -2,21 +2,25 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 
 import { RentalsRepositoryInMemory } from "@modules/rentals/repositories/in-memory/RentalsRepositoryInMemory";
+import { CarsRepositoryInMemory } from "@modules/cars/repositories/in-memory/CarsRepositoryInMemory";
+import { DayjsDateProvider } from "@shared/container/providers/DateProvider/implementations/DayjsDateProvider";
 import { CreateRentalUseCase } from "./CreateRentalUseCase";
 
 import { AppError } from "@shared/errors/AppError";
-import { DayjsDateProvider } from "@shared/container/providers/DateProvider/implementations/DayjsDateProvider";
 
 let rentalsRepositoryInMemory: RentalsRepositoryInMemory;
 let createRentalUseCase: CreateRentalUseCase;
-let dayjsDateProvidr: DayjsDateProvider;
+let dayjsDateProvidrr: DayjsDateProvider;
+let carsRepositoryInMemory: CarsRepositoryInMemory;
 
 describe("Create Rental", () => {
 
     beforeEach(() => {
         rentalsRepositoryInMemory = new RentalsRepositoryInMemory();
-        dayjsDateProvidr = new DayjsDateProvider();
-        createRentalUseCase = new CreateRentalUseCase(rentalsRepositoryInMemory, dayjsDateProvidr);
+        dayjsDateProvidrr = new DayjsDateProvider();
+        carsRepositoryInMemory = new CarsRepositoryInMemory();
+        
+        createRentalUseCase = new CreateRentalUseCase(rentalsRepositoryInMemory, dayjsDateProvidrr, carsRepositoryInMemory);
     });
 
     it("Should be able to create a new rental", async () => {

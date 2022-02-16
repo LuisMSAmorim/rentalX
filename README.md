@@ -70,3 +70,4 @@
 - After return, total value must be calculated;
 - If the return time is longer than expected, a fine will be charged on the days of delay
 - If there is a fine, it must be added to the total rent
+- User must be logged to finish a rental;
