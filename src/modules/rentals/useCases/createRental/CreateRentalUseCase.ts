@@ -39,7 +39,7 @@ class CreateRentalUseCase {
 
     public async execute({ car_id, expected_return_date, user_id }: IRequest): Promise<Rental> {
         const minHours = 24;
-        
+       
         const carUnavailable = await this.rentalsRepository.findOpenRentalByCar(car_id);
 
         if(carUnavailable){

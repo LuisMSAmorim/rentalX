@@ -10,7 +10,7 @@ import { AppError } from "@shared/errors/AppError";
 
 interface IRequest {
     id: string;
-    car_id: string;
+    user_id: string
 };
 
 @injectable()
@@ -33,11 +33,12 @@ class DevolutionRentalUseCase {
     ){
         this.rentalsRepository = rentalsRepository;
         this.carsRepository = carsRepository;
+        this.dateProvider = dateProvider;
     };
     
-    public async execute({ id, car_id }: IRequest): Promise<Rental> {
+    public async execute({ id, user_id }: IRequest): Promise<Rental> {
         const rental = await this.rentalsRepository.findById(id);
-        const car = await this.carsRepository.findById(car_id);
+        const car = await this.carsRepository.findById(rental.car_id);
         const minimum_daily = 1;
 
         if(!rental){
@@ -65,7 +66,7 @@ class DevolutionRentalUseCase {
         rental.total = total;
 
         await this.rentalsRepository.create(rental);
-        await this.carsRepository.updateAvailable(car_id, true);
+        await this.carsRepository.updateAvailable(rental.car_id, true);
 
         return rental;
     };
