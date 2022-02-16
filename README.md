@@ -57,3 +57,16 @@
 - Should not be able to register a new rental if user already have a current one;
 - Should not be able to register a new rental if car are already rented;
 - User must be logged to create a rental;
+
+## Car devolution
+
+**FR**
+- Should be able to give back a car;
+
+**BR**
+- If car was gived back with less than 24 hours, must be charged a full day;
+- After return, car needs to be free to another rental; 
+- After return, user needs to be free to another rental; 
+- After return, total value must be calculated;
+- If the return time is longer than expected, a fine will be charged on the days of delay
+- If there is a fine, it must be added to the total rent
