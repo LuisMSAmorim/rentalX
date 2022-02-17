@@ -38,7 +38,7 @@ describe("Create Category", () => {
     
             await createCategoryUseCase.execute(category);
            
-        }).rejects.toBeInstanceOf(AppError);
+        }).rejects.toEqual(new AppError("Name already in use"));
     });
 
 });

@@ -49,7 +49,7 @@ describe("Create Car", () => {
                 category_id: "testing"
             });
 
-        }).rejects.toBeInstanceOf(AppError);
+        }).rejects.toEqual(new AppError("Car already exists"));
     });
 
     it("Should be able to create an available car by default", async () => {

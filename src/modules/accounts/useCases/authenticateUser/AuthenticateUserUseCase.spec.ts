@@ -42,7 +42,7 @@ describe("Authenticate User", () => {
                 password: "aWeakPasswordHere"
             });
        
-        }).rejects.toBeInstanceOf(AppError);
+        }).rejects.toEqual(new AppError("Email or password incorrect"));
     });
 
     it("Should not be able to authenticate an user with a wrong password", async () => {
@@ -61,6 +61,6 @@ describe("Authenticate User", () => {
                 password: "wrongPassword"
             });
 
-        }).rejects.toBeInstanceOf(AppError);;
+        }).rejects.toEqual(new AppError("Email or password incorrect"));;
     });
 });

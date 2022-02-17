@@ -14,7 +14,7 @@ export class CreateCategories1642101130007 implements MigrationInterface {
                 },
                 {
                     name: "name",
-                    type: "varchar"
+                    type: "varchar",
                 },
                 {
                     name: "description",
@@ -26,7 +26,7 @@ export class CreateCategories1642101130007 implements MigrationInterface {
                     default: "now()"
                 }
             ]
-            })
+            }),
         );
     }
 
