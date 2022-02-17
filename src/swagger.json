@@ -2,14 +2,14 @@
     "openapi": "3.0.0",
     "info": {
         "title": "RentX Documentation",
-        "description": "This is an rent API",
+        "description": "A cars rental API",
         "version": "1.0.0",
         "contact": "luismiguel_silvaamorim@hotmail.com"
     },
     "paths": {
         "/categories": {
             "post": {
-                "tags": ["Category"],
+                "tags": ["Categories"],
                 "summary": "Create Category",
                 "description": "Create a new category",
                 "security": [
@@ -48,7 +48,7 @@
                 }
             },
             "get": {
-                "tags": ["Category"],
+                "tags": ["Categories"],
                 "summary": "List all categories",
                 "description": "List all categories",
                 "responses": {
@@ -78,7 +78,7 @@
         },
         "/categories/import": {
             "post": {
-                "tags": ["Category"],
+                "tags": ["Categories"],
                 "summary": "Upload category",
                 "description": "Upload category",
                 "security": [
@@ -138,7 +138,7 @@
         },
         "/sessions": {
             "post": {
-                "tags": ["Session"],
+                "tags": ["Sessions"],
                 "summary": "Authentication user",
                 "description": "Authentication user",
                 "requestBody": {
@@ -170,7 +170,7 @@
         },
         "/cars": {
             "post": {
-                "tags": ["cars"],
+                "tags": ["Cars"],
                 "summary": "Create Car",
                 "description": "Create a new car",
                 "security": [
@@ -193,6 +193,52 @@
                     },
                     "400": {
                         "description": "Category already exists"
+                    }
+                }
+            }
+        },
+        "/cars/images/{id}": {
+            "post": {
+                "tags": ["Cars"],
+                "summary": "Upload car image",
+                "description": "Upload car image",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Car id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data":  {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "images": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
                     }
                 }
             }
