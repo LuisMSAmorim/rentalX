@@ -71,3 +71,11 @@
 - If the return time is longer than expected, a fine will be charged on the days of delay
 - If there is a fine, it must be added to the total rent
 - User must be logged to finish a rental;
+
+## User's rentals listing
+
+**FR**
+- Should be able to list all rentals by user;
+
+**BR**
+- User must be logged;
