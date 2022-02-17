@@ -21,11 +21,8 @@ let createCarsSpecificationsController = new CreateCarSpecificationController();
 let uploadCarImagesController = new UploadCarImagesController();
 
 carsRoutes.post('/', ensureAuthenticated, ensureAdmin, createCarController.handle);
-
 carsRoutes.get('/available', listAvailableCarsController.handle);
-
 carsRoutes.post('/specifications/:id', ensureAuthenticated, ensureAdmin, createCarsSpecificationsController.handle);
-
 carsRoutes.post('/images/:id', ensureAuthenticated, ensureAdmin, upload.array("images"), uploadCarImagesController.handle);
 
 export { carsRoutes };
