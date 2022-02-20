@@ -4,6 +4,7 @@ import { sign } from "jsonwebtoken";
 
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
+import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
 
 interface IRequest {
     email: string;
@@ -22,12 +23,18 @@ interface IResponse {
 class AuthenticateUserUseCase {
     
     private usersRepository: IUsersRepository;
+    private usersTokensRepository: IUsersTokensRepository;
 
     constructor(
         @inject("UsersRepository")
         usersRepository: 
-        IUsersRepository){
-        this.usersRepository = usersRepository
+        IUsersRepository,
+        @inject("UsersTokensRepository")
+        usersTokensRepository:
+        IUsersTokensRepository
+        ){
+        this.usersRepository = usersRepository;
+        this.usersTokensRepository = usersTokensRepository;
     };
 
     public async execute({ email, password }: IRequest): Promise<IResponse> {
