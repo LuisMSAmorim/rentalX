@@ -79,3 +79,10 @@
 
 **BR**
 - User must be logged;
+
+## Password recovery
+
+**FR**
+- Should be able to recovery password with email;
+- User must receive a email with steps to recovery your own password;
+- User should be able to create a new password.
