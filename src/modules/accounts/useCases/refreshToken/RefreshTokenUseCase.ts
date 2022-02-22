@@ -45,7 +45,7 @@ class RefreshTokenUseCase {
 
         await this.usersTokensRepository.deleteById(userToken.id);
 
-        const newResfreshToken = sign({ email }, secret_refresh_token, {
+        const newRefreshToken = sign({ email }, secret_refresh_token, {
             subject: sub,
             expiresIn: expires_in_refresh_token
         });
@@ -54,11 +54,11 @@ class RefreshTokenUseCase {
 
         await this.usersTokensRepository.create({
             expiration_date: new_refresh_token_expires_date,
-            refresh_token: newResfreshToken,
+            refresh_token: newRefreshToken,
             user_id: sub
         })
 
-        return newResfreshToken;
+        return newRefreshToken;
     };
 };
 
