@@ -8,4 +8,4 @@ import { EtherealEmailProvider } from "./EmailProvider/implementations/EtherealE
 
 container.registerSingleton<IDateProvider>("DateProvider", DayjsDateProvider);
 
-container.registerSingleton<IEMailProvider>("EmailProvider", EtherealEmailProvider);
+container.registerInstance<IEMailProvider>("EmailProvider", new EtherealEmailProvider());
