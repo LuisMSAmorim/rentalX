@@ -21,6 +21,20 @@ class ImportCategoryUseCase{
         this.categoriesRepository = categoriesRepository;
     };
 
+    public async execute(file: Express.Multer.File): Promise<void>{
+        const categories = await this.loadCategories(file);
+        
+        categories.map(async (category) => {
+            const { name, description } = category;
+            
+            const findCategory = await this.categoriesRepository.findByName(name);
+            
+            if(!findCategory){
+                await this.categoriesRepository.create({name, description});
+            };
+        });
+    };
+
     private loadCategories(file: Express.Multer.File): Promise<IImportCategory[]> {
         return new Promise((resolve, reject) => {
             const categories: IImportCategory[] = [];
@@ -43,20 +57,6 @@ class ImportCategoryUseCase{
             }).on("error", (err) => {
                 reject(err);
             });
-        });
-    };
-
-    public async execute(file: Express.Multer.File): Promise<void>{
-        const categories = await this.loadCategories(file);
-        
-        categories.map(async (category) => {
-            const { name, description } = category;
-
-            const findCategory = await this.categoriesRepository.findByName(name);
-
-            if(!findCategory){
-                await this.categoriesRepository.create({name, description});
-            };
         });
     };
 };

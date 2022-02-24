@@ -38,35 +38,57 @@ class CreateRentalUseCase {
     };
 
     public async execute({ car_id, expected_return_date, user_id }: IRequest): Promise<Rental> {
-        const minHours = 24;
-       
-        const carUnavailable = await this.rentalsRepository.findOpenRentalByCar(car_id);
 
-        if(carUnavailable){
+        await this.verifyIfCarIsAvailable(car_id);
+
+        await this.verifyIfUserIsAvailable(user_id);
+
+        this.verifyExpectedReturnDate(expected_return_date);
+
+        const rental = await this.createRental({ car_id, expected_return_date, user_id })
+
+        await this.turnCarUnavailable(car_id);
+
+        return rental;
+    };
+
+    private async verifyIfCarIsAvailable(car_id: string): Promise<void> {
+        const carHaveACurrentRental = await this.rentalsRepository.findOpenRentalByCar(car_id);
+
+        if(carHaveACurrentRental){
             throw new AppError("Car isnt available");
         };
+    }
 
-        const rentalOpenToUser = await this.rentalsRepository.findOpenRentalByUser(user_id);
+    private async verifyIfUserIsAvailable(user_id: string): Promise<void> {
+        const userHaveACurrentRental = await this.rentalsRepository.findOpenRentalByUser(user_id);
 
-        if(rentalOpenToUser){
+        if(userHaveACurrentRental){
             throw new AppError("User already have an open rental");
         };
+    };
 
-        const compare = this.dateProvider.compareInHours("now", expected_return_date, );
+    private verifyExpectedReturnDate(expected_return_date: Date): void {
+        const rentalMinimumHours = 24;
 
-        if(compare < minHours){
+        const expectedRentalHours = this.dateProvider.compareInHours("now", expected_return_date, );
+
+        if(expectedRentalHours < rentalMinimumHours){
             throw new AppError("Invalid return time (min. 24 hours)");
         };
+    };
 
-        const rental = await this.rentalsRepository.create({
+    private async createRental({ car_id, expected_return_date, user_id }: IRequest): Promise<Rental> {
+        
+        return await this.rentalsRepository.create({
             user_id,
             car_id,
             expected_return_date
         });
+    };
 
+    private async turnCarUnavailable(car_id: string): Promise<void> {
         await this.carsRepository.updateAvailable(car_id, false);
-
-        return rental;
     };
 };
 
