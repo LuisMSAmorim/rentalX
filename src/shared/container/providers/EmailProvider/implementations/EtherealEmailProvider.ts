@@ -1,5 +1,7 @@
 import { injectable } from "tsyringe";
 import nodemailer, { Transporter } from "nodemailer";
+import Handlebars from "handlebars";
+import fs from "fs";
 
 import { IEMailProvider } from "../IEmailProvider";
 
@@ -26,14 +28,19 @@ class EtherealEmailProvider implements IEMailProvider {
         });
     };
 
-    public async sendEmail(to: string, subject: any, body: string): Promise<void> {
+    public async sendEmail(to: string, subject: string, variables: any, path: string): Promise<void> {
         
+        const templateFileContent = fs.readFileSync(path).toString("utf-8");
+
+        const templateParse = Handlebars.compile(templateFileContent);
+
+        const templateHTML = templateParse(variables);
+
         await this.client.sendMail({
             to,
             from: "RentX <noreply@rentx.com.br>",
             subject,
-            text: body,
-            html: body
+            html: templateHTML
         });
     };
 };

@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { v4 as uuid } from "uuid";
+import { resolve } from "path";
 
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
 import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
@@ -39,6 +40,8 @@ class SendRecoveryPasswordEmailUseCase {
     public async execute(email: string) {
         const user = await this.usersRepository.findByEmail(email);
 
+        const templatePath = resolve(__dirname, "..", "..", "views", "emails", "recoveryPasswordEmail.handlebars");
+
         if(!user){
             throw new AppError("User doesnt exists");
         };
@@ -53,7 +56,12 @@ class SendRecoveryPasswordEmailUseCase {
             expiration_date
         });
 
-        await this.emailProvider.sendEmail(email, "Recuperação de senha", `O seu token de recuperação é ${recoveryToken}`);
+        const variables = {
+            name: user.name,
+            link: `${process.env.RECOVERY_EMAIL_URL}${recoveryToken}`
+        };
+
+        await this.emailProvider.sendEmail(email, "Recuperação de senha", variables, templatePath);
     };
 };
 
