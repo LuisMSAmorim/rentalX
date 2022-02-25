@@ -8,6 +8,7 @@ import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepositor
 import { AppError } from "@shared/errors/AppError";
 import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
+import { User } from "@modules/accounts/infra/typeorm/entities/User";
 
 interface IRequest {
     email: string;
@@ -47,30 +48,16 @@ class AuthenticateUserUseCase {
     };
 
     public async execute({ email, password }: IRequest): Promise<IResponse> {
-        const user = await this.usersRepository.findByEmail(email);
-        const { expires_in_token, secret_refresh_token, secret_token, expires_in_refresh_token, expires_refresh_token_days } = auth;
 
-        if(!user){
-            throw new AppError("Email or password incorrect");
-        };
+        const user = await this.getUser(email);
 
-        const comparePassswords = await compare(password, user.password);
+        await this.verifyUserPassword(password, user);
 
-        if(!comparePassswords){
-            throw new AppError("Email or password incorrect");
-        };
+        const token = await this.createUserToken(user);
 
-        const token = sign({}, secret_token, {
-            subject: user.id,
-            expiresIn: expires_in_token
-        });
+        const refresh_token = await this.createUserRefreshToken(user);
 
-        const refresh_token = sign({ email }, secret_refresh_token, {
-            subject: user.id,
-            expiresIn: expires_in_refresh_token
-        });
-
-        const refresh_token_expiration_date = this.dateProvider.addDays(expires_refresh_token_days)
+        const refresh_token_expiration_date = this.setRefreshTokenExpirationDate();
 
         await this.usersTokensRepository.create({ 
             expiration_date: refresh_token_expiration_date,
@@ -88,6 +75,52 @@ class AuthenticateUserUseCase {
         };
 
         return tokenReturn;
+    };
+
+    private async getUser(email: string): Promise<User> {
+        const userExists = await this.usersRepository.findByEmail(email);
+
+        if(!userExists){
+            throw new AppError("Email or password incorrect");
+        };
+
+        return userExists;
+    };
+
+    private async verifyUserPassword(password: string, user: User): Promise<void> {
+        const passwordIsCorrect = await compare(password, user.password);
+
+        if(!passwordIsCorrect){
+            throw new AppError("Email or password incorrect");
+        };
+    };
+
+    private async createUserToken(user: User): Promise<string> {
+        const { secret_token, expires_in_token } = auth;
+
+        const token = sign({}, secret_token, {
+            subject: user.id,
+            expiresIn: expires_in_token
+        });
+
+        return token;
+    };
+
+    private async createUserRefreshToken(user: User): Promise<string> {
+        const { secret_refresh_token, expires_in_refresh_token } = auth;
+
+        const refresh_token = sign({ email: user.email }, secret_refresh_token, {
+            subject: user.id,
+            expiresIn: expires_in_refresh_token
+        });
+        
+        return refresh_token;
+    };
+
+    private setRefreshTokenExpirationDate(): Date {
+        const { expires_refresh_token_days } = auth;
+
+        return this.dateProvider.addDays(expires_refresh_token_days);
     };
 };
 

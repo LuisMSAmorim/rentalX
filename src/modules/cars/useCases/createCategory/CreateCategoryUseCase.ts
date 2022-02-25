@@ -22,13 +22,17 @@ class CreateCategoryUseCase{
     };
 
     public async execute({ name, description }: IRequest): Promise<void> {
+        await this.verifyIfCategoryNameIsAvailable(name);
+    
+        await this.categoriesRepository.create({name, description});
+    };
+
+    private async verifyIfCategoryNameIsAvailable(name: string): Promise<void> {
         const categoryNameExists = await this.categoriesRepository.findByName(name);
 
         if(categoryNameExists){
             throw new AppError("Name already in use");
         };
-    
-        await this.categoriesRepository.create({name, description});
     };
 };
 

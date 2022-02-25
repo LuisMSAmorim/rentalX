@@ -51,7 +51,7 @@ class CreateRentalUseCase {
 
         return rental;
     };
-
+ 
     private async verifyIfCarIsAvailable(car_id: string): Promise<void> {
         const carHaveACurrentRental = await this.rentalsRepository.findOpenRentalByCar(car_id);
 

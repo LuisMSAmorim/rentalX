@@ -31,11 +31,7 @@ class CreateCarSpecificationUseCase {
     };
 
     public async execute({ car_id, specifications_id }: IRequest): Promise<Car> {
-        const car = await this.carsRepository.findById(car_id);
-
-        if(!car){
-            throw new AppError("Car doesnt exists");
-        };
+        const car = await this.findCar(car_id);
 
         const specifications = await this.specificationsRepository.findByIds(specifications_id); 
         
@@ -44,6 +40,16 @@ class CreateCarSpecificationUseCase {
         await this.carsRepository.create(car);
 
         return car;
+    };
+
+    private async findCar(car_id: string): Promise<Car> {
+        const carExists = await this.carsRepository.findById(car_id);
+
+        if(!carExists){
+            throw new AppError("Car doesnt exists");
+        };
+
+        return carExists;
     };
 };
 
