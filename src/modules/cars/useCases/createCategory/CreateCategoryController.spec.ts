@@ -37,7 +37,10 @@ describe("Create Category Controller", () => {
         };
 
         const loginToken = await server.post('/sessions').send(loginData);
+
         const { token } = loginToken.body.token;
+
+        console.log(token);
 
         const response = await server.post('/categories').send({
             name: "CategorySuperTest",
