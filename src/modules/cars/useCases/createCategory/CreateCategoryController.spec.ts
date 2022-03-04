@@ -38,15 +38,13 @@ describe("Create Category Controller", () => {
 
         const loginToken = await server.post('/sessions').send(loginData);
 
-        const { token } = loginToken.body.token;
-
-        console.log(token);
+        const { refresh_token } = loginToken.body.token;
 
         const response = await server.post('/categories').send({
             name: "CategorySuperTest",
             description: "A supertest test description"
         }).set({
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${refresh_token}`
         });
 
         expect(response.status).toBe(201);
@@ -59,13 +57,13 @@ describe("Create Category Controller", () => {
         };
 
         const loginToken = await server.post('/sessions').send(loginData);
-        const { token } = loginToken.body.token;
+        const { refresh_token } = loginToken.body.token;
 
         const response = await server.post('/categories').send({
             name: "CategorySuperTest",
             description: "A supertest test description"
         }).set({
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${refresh_token}`
         });
 
         expect(response.status).toBe(400);

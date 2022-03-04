@@ -38,7 +38,7 @@ class ResetUserPasswordUseCase {
     };
 
     public async execute({ password, token }: IRequest): Promise<void> {
-        const userToken = await this.verifyIfTokenExists(token);
+        const userToken = await this.findUserToken(token);
 
         this.verifyIfTokenIsValid(userToken);
 
@@ -49,7 +49,7 @@ class ResetUserPasswordUseCase {
         await this.deleteUsedToken(userToken.id);
     };
 
-    private async verifyIfTokenExists(token: string): Promise<UserToken> {
+    private async findUserToken(token: string): Promise<UserToken> {
         const userTokenExists = await this.usersTokensRepository.findByRefreshToken(token);
 
         if(!userTokenExists){

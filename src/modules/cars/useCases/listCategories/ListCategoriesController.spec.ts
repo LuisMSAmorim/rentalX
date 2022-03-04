@@ -36,7 +36,7 @@ describe("List Categories", () => {
         };
 
         const loginToken = await server.post('/sessions').send(loginData);
-        const { token } = loginToken.body.token;
+        const { refresh_token } = loginToken.body.token;
 
         const category = {
             name: "CategorySuperTest",
@@ -44,11 +44,11 @@ describe("List Categories", () => {
         };
 
         await server.post('/categories').send(category).set({
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${refresh_token}`
         });
 
         const response = await server.get('/categories').set({
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${refresh_token}`
         });
 
         expect(response.status).toBe(200);
