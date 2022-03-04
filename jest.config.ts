@@ -13,4 +13,11 @@ export default {
   testMatch: [
     "**/*.spec.ts"
   ],
+  collectCoverage: true,
+  collectCoverageFrom: ['<rootDir>/src/modules/**/useCases/**/*.ts'],
+  coverageDirectory: 'coverage',
+  coverageReporters: [
+    "lcov",
+    "text-summary"
+  ]
 };
