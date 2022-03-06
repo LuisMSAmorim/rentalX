@@ -53,9 +53,10 @@ class AuthenticateUserUseCase {
 
         await this.verifyUserPassword(password, user);
 
-        const token = await this.createUserToken(user);
-
-        const refresh_token = await this.createUserRefreshToken(user);
+        const [token, refresh_token] = await Promise.all([
+            this.createUserToken(user),
+            this.createUserRefreshToken(user)
+        ]);
 
         const refresh_token_expiration_date = this.setRefreshTokenExpirationDate();
 

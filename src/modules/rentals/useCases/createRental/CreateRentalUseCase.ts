@@ -39,11 +39,11 @@ class CreateRentalUseCase {
 
     public async execute({ car_id, expected_return_date, user_id }: IRequest): Promise<Rental> {
 
-        await this.verifyIfCarIsAvailable(car_id);
-
-        await this.verifyIfUserIsAvailable(user_id);
-
-        this.verifyExpectedReturnDate(expected_return_date);
+        await Promise.all([
+            this.verifyIfCarIsAvailable(car_id),
+            this.verifyIfUserIsAvailable(user_id),
+            this.verifyExpectedReturnDate(expected_return_date)
+        ])
 
         const rental = await this.createRental({ car_id, expected_return_date, user_id })
 

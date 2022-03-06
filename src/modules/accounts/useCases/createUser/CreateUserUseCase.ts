@@ -20,9 +20,10 @@ class CreateUserUseCase {
 
     public async execute({ name, email, password, driver_license }: ICreateUserDTO): Promise<void>{
         
-        await this.verifyIfUserExists(email);
-
-        const passwordHash = await hash(password, 10);
+        const [, passwordHash] = await Promise.all([
+            this.verifyIfUserExists(email),
+            hash(password, 10)
+        ])
 
         await this.usersRepository.create({
             name, 

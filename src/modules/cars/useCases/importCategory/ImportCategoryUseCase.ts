@@ -24,15 +24,7 @@ class ImportCategoryUseCase{
     public async execute(file: Express.Multer.File): Promise<void>{
         const categories = await this.loadCategories(file);
         
-        categories.map(async (category) => {
-            const { name, description } = category;
-            
-            const findCategory = await this.categoriesRepository.findByName(name);
-            
-            if(!findCategory){
-                await this.categoriesRepository.create({name, description});
-            };
-        });
+        await this.createEachCategory(categories);
     };
 
     private loadCategories(file: Express.Multer.File): Promise<IImportCategory[]> {
@@ -57,6 +49,18 @@ class ImportCategoryUseCase{
             }).on("error", (err) => {
                 reject(err);
             });
+        });
+    };
+
+    private async createEachCategory(categories: IImportCategory[]){
+        categories.map(async (category) => {
+            const { name, description } = category;
+            
+            const categoryAlreadyExists = await this.categoriesRepository.findByName(name);
+            
+            if(!categoryAlreadyExists){
+                await this.categoriesRepository.create({name, description});
+            };
         });
     };
 };

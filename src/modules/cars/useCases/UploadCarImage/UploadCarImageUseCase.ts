@@ -22,10 +22,10 @@ class UploadCarImageUseCase {
 
     public async execute({ car_id, images_name }: IRequest): Promise<void> {
 
-        this.addImagesToCar({ car_id, images_name });
+        await this.addImagesToCar({ car_id, images_name });
     };
 
-    private addImagesToCar({car_id, images_name}: IRequest): void {
+    private async addImagesToCar({car_id, images_name}: IRequest): Promise<void> {
 
         images_name.map(async (image) => {
             await this.carsImagesRepository.create(car_id, image);
